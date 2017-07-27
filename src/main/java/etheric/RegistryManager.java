@@ -1,5 +1,6 @@
 package etheric;
 
+import etheric.client.renderer.entity.RenderCelestial;
 import etheric.client.renderer.entity.RenderLesserCelestial;
 import etheric.client.renderer.tileentity.TileEntityPipeRenderer;
 import etheric.common.block.BlockBase;
@@ -8,6 +9,7 @@ import etheric.common.block.BlockLodestoneOre;
 import etheric.common.block.BlockPipe;
 import etheric.common.block.BlockRift;
 import etheric.common.block.BlockTestTank;
+import etheric.common.entity.mob.EntityCelestial;
 import etheric.common.entity.mob.EntityLesserCelestial;
 import etheric.common.item.ItemMaterial;
 import etheric.common.item.ItemSeeingStone;
@@ -108,6 +110,8 @@ public class RegistryManager {
 		int id = 0;
 		
 		EntityRegistry.registerModEntity(new ResourceLocation(Etheric.MODID, "lesser_celestial"), EntityLesserCelestial.class, "lesser_celestial", id++, Etheric.MODID, 96, 1, true, 16777215, 13158600);
+		EntityRegistry.registerModEntity(new ResourceLocation(Etheric.MODID, "celestial"), EntityCelestial.class, "celestial", id++, Etheric.MODID, 96, 1, true, 16777215, 13158600);
+
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -115,7 +119,7 @@ public class RegistryManager {
 	public static void registerEntityRenderers(RegistryEvent.Register<EntityEntry> event) {
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityLesserCelestial.class, new RenderLesserCelestial.Factory());
-		
+		RenderingRegistry.registerEntityRenderingHandler(EntityCelestial.class, new RenderCelestial.Factory());
 	}
 	
 	@SideOnly(Side.CLIENT)

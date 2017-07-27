@@ -1,5 +1,6 @@
 # Mobs
 entity.lesser_celestial.name=Lesser Celestial
+entity.celestial.name=Celestial
 
 # Blocks
 tile.etheric.celestial_stone.name=Celestial Stone

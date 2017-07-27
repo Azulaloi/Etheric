@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 
+import etheric.Etheric;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,6 +25,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class EntityLesserCelestial extends EntityMob {
@@ -32,6 +34,7 @@ public class EntityLesserCelestial extends EntityMob {
 		public boolean apply(@Nullable Entity p_apply_1_) {
 			return p_apply_1_ instanceof EntityLivingBase
 					&& !(p_apply_1_ instanceof EntityLesserCelestial)
+					&& !(p_apply_1_ instanceof EntityCelestial)
 					&& ((EntityLivingBase) p_apply_1_).attackable();
 		}
 	};
@@ -73,6 +76,11 @@ public class EntityLesserCelestial extends EntityMob {
 
 	protected void entityInit() {
 		super.entityInit();
+	}
+
+	@Override
+	protected ResourceLocation getLootTable() {
+		return new ResourceLocation (Etheric.MODID + ":mobs/lesser_celestial");
 	}
 
 }
