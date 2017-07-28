@@ -4,6 +4,8 @@ import com.google.common.base.Predicate;
 import etheric.Etheric;
 import etheric.RegistryManager;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
@@ -13,12 +15,16 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
 public class EntityCelestial extends EntityMob {
+	private int attackTimer;
 
 	private static final Predicate<Entity> NOT_CELESTIAL = new Predicate<Entity>() {
 		public boolean apply(@Nullable Entity p_apply_1_) {
@@ -35,8 +41,8 @@ public class EntityCelestial extends EntityMob {
 		this.experienceValue = 100;
 		this.stepHeight = 1.5F;
 		this.jumpMovementFactor = 0.4F;
-		EntityMoveHelper movehelper = this.getMoveHelper();
-		EntityLookHelper lookHelper = this.getLookHelper();
+//		EntityMoveHelper movehelper = this.getMoveHelper();
+//		EntityLookHelper lookHelper = this.getLookHelper();
 	}
 
 	protected void initEntityAI() {
@@ -83,6 +89,25 @@ public class EntityCelestial extends EntityMob {
 		return super.attackEntityFrom(source, amount);
 	}
 
+	@Override
+	public boolean attackEntityAsMob(Entity entityIn){
+		this.attackTimer = 10;
+		this.world.setEntityState(this, (byte)4);
+		boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(7 + this.rand.nextInt(15)));
+		if (flag) {
+			entityIn.motionY += 0.4000000059604645D;
+			this.applyEnchantments(this, entityIn);
+		}
+		return flag;
+	}
+
+
+
+	@SideOnly(Side.CLIENT)
+	public int getAttackTimer() {
+		return this.attackTimer;
+	}
+
 	protected SoundEvent getAmbientSound()
 	{
 		return SoundEvents.ENTITY_ELDER_GUARDIAN_AMBIENT;
@@ -101,5 +126,22 @@ public class EntityCelestial extends EntityMob {
 	@Override
 	protected ResourceLocation getLootTable() {
 		return new ResourceLocation (Etheric.MODID + ":mobs/celestial");
+	}
+
+	public void onLivingUpdate() {
+		super.onLivingUpdate();
+		if (this.attackTimer > 0) {
+			--this.attackTimer;
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void handleStatusUpdate(byte id) {
+		if (id == 4) {
+			this.attackTimer = 10;
+			this.playSound(SoundEvents.ENTITY_IRONGOLEM_ATTACK, 1.0F, 1.0F);
+		} else {
+			super.handleStatusUpdate(id);
+		}
 	}
 }

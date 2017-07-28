@@ -7,6 +7,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Vector3d;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -141,8 +143,7 @@ public class ModelCelestial extends ModelBase {
 		modelRenderer.rotateAngleZ = z;
 	}
 
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
-	{
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
 		float swing = limbSwingAmount * 0.7f; //Tone that down, please.
 		this.head.rotateAngleY = netHeadYaw * 0.017453292F;
 		this.head.rotateAngleX = headPitch * 0.017453292F;
@@ -150,10 +151,29 @@ public class ModelCelestial extends ModelBase {
 		this.legR.rotateAngleX = 1.5F * this.triangleWave(limbSwing, 13.0F) * swing;
 		this.legL.rotateAngleY = 0.0F;
 		this.legR.rotateAngleY = 0.0F;
+
+		this.armR.rotateAngleZ = 0.0F;
+		this.armL.rotateAngleZ = 0.0F;
+		this.armR.rotateAngleZ += MathHelper.cos(ageInTicks * 0.08F) * 0.03F - 0.05F;
+		this.armL.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.08F) * 0.03F - 0.05F;
+		this.armR.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.03F;
+		this.armL.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.03F;
 	}
 
-	private float triangleWave(float p1, float p2) //Lifted from Iron Golem logic. You think I can make a triangle wave?
-	{
+	public void setLivingAnimations(EntityLivingBase entityIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+		EntityCelestial celestial = (EntityCelestial) entityIn;
+		float swing = limbSwingAmount * 0.7f;
+		int i = celestial.getAttackTimer();
+		if (i > 0) {
+			this.armR.rotateAngleX = -2.0F + 1.5F * this.triangleWave((float) i - partialTickTime, 10.0F);
+			this.armL.rotateAngleX = -2.0F + 1.5F * this.triangleWave((float) i - partialTickTime, 10.0F);
+		} else {
+			this.armR.rotateAngleX = (-0.2F + 1.5F * this.triangleWave(limbSwing, 13.0F)) * swing;
+			this.armL.rotateAngleX = (-0.2F - 1.5F * this.triangleWave(limbSwing, 13.0F)) * swing;
+		}
+	}
+
+	private float triangleWave(float p1, float p2) {
 		return (Math.abs(p1 % p2 - p2 * 0.5F) - p2 * 0.25F) / (p2 * 0.25F);
 	}
 }
