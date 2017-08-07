@@ -48,8 +48,8 @@ public class ModelCelestial extends ModelBase {
 		this.armL.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4);
 
 		this.lowerArmL = new ModelRenderer(this, 48, 28);
-		this.lowerArmL.setRotationPoint(-7.0F, -12.0F, 0.0F);
-		this.lowerArmL.addBox(4.0F, 22.0F, -2.0F, 4, 12, 4);
+		this.lowerArmL.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.lowerArmL.addBox(0.0F, 0.0F, 0.0F, 4, 12, 4);
 
 		this.armR = new ModelRenderer(this, 48, 16);
 		this.armR.setRotationPoint(7.0F, -22.0F, 0.0F);
@@ -175,6 +175,15 @@ public class ModelCelestial extends ModelBase {
 		this.armL.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.08F) * 0.03F - 0.05F;
 		this.armR.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.03F;
 		this.armL.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.03F;
+
+//		this.lowerArmL.offsetY = -2F;
+//		this.lowerArmL.setRotationPoint(-8.0F, 22.0F, 1.0F);
+		this.lowerArmL.setRotationPoint(-3.0F, 10.0F, -2.0F); //Front left corner of elbow when looking at front of celestial
+//		this.lowerArmL.rotateAngleX = -2.5F;
+
+//		this.lowerArmR.rotateAngleZ += MathHelper.sin(ageInTicks * 0.05F) * 0.03F;
+//		this.lowerArmL.rotateAngleZ += 0.01F;
+		this.lowerArmL.rotateAngleX += 0.01F;
 
 //		Etheric.logger.log(Level.INFO, "ageInTicks: " + ageInTicks);
 //		Etheric.logger.log(Level.INFO, "Cos: " + MathHelper.cos(ageInTicks));
