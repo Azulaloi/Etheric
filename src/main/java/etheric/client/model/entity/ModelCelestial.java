@@ -26,37 +26,56 @@ public class ModelCelestial extends ModelBase {
 	public ModelRenderer legR;
 	public ModelRenderer hat;
 	public ModelRenderer lowertorso;
+	public ModelRenderer lowerArmL;
+	public ModelRenderer lowerArmR;
 
 	public ModelCelestial() {
 		this.textureWidth = 64;
 		this.textureHeight = 64;
 
-		this.armL = new ModelRenderer(this, 48, 16);
-		this.armL.setRotationPoint(-7.0F, -22.0F, 0.0F);
-		this.armL.addBox(-3.0F, -2.0F, -2.0F, 4, 24, 4);
-		this.legL = new ModelRenderer(this, 0, 16);
-		this.legL.setRotationPoint(-1.9F, 0.0F, 0.1F);
-		this.legL.addBox(-2.0F, 0.0F, -2.0F, 4, 24, 4);
 		this.head = new ModelRenderer(this, 0, 0);
 		this.head.setRotationPoint(0.0F, -24.0F, 0.0F);
 		this.head.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8);
 		this.upperTorso = new ModelRenderer(this, 0, 44);
 		this.upperTorso.setRotationPoint(0.0F, -24.0F, -1.0F);
 		this.upperTorso.addBox(-6.0F, 0.0F, -2.0F, 12, 12, 6);
+		this.lowertorso = new ModelRenderer(this, 16, 16);
+		this.lowertorso.setRotationPoint(0.0F, -12.0F, 0.0F);
+		this.lowertorso.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4);
+
+		this.armL = new ModelRenderer(this, 48, 16);
+		this.armL.setRotationPoint(-7.0F, -22.0F, 0.0F);
+		this.armL.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4);
+
+		this.lowerArmL = new ModelRenderer(this, 48, 28);
+		this.lowerArmL.setRotationPoint(-7.0F, -12.0F, 0.0F);
+		this.lowerArmL.addBox(4.0F, 22.0F, -2.0F, 4, 12, 4);
+
 		this.armR = new ModelRenderer(this, 48, 16);
 		this.armR.setRotationPoint(7.0F, -22.0F, 0.0F);
-		this.armR.addBox(-1.0F, -2.0F, -2.0F, 4, 24, 4);
+		this.armR.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4);
 		this.armR.mirror = true;
+
+		this.lowerArmR = new ModelRenderer(this, 48, 28);
+		this.lowerArmR.setRotationPoint(-7.0F, -12.0F, 0.0F);
+		this.lowerArmR.addBox(6.0F, 22.0F, -2.0F, 4, 12, 4);
+
+		this.legL = new ModelRenderer(this, 0, 16);
+		this.legL.setRotationPoint(-1.9F, 0.0F, 0.1F);
+		this.legL.addBox(-2.0F, 0.0F, -2.0F, 4, 24, 4);
 		this.legR = new ModelRenderer(this, 0, 16);
 		this.legR.setRotationPoint(1.9F, 0.0F, 0.1F);
 		this.legR.addBox(-2.0F, 0.0F, -2.0F, 4, 24, 4);
 		this.legR.mirror = true;
+
+
+
 		this.hat = new ModelRenderer(this, 32, 0);
 		this.hat.setRotationPoint(0.0F, -24.0F, 0.0F);
 		this.hat.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8);
-		this.lowertorso = new ModelRenderer(this, 16, 16);
-		this.lowertorso.setRotationPoint(0.0F, -12.0F, 0.0F);
-		this.lowertorso.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4);
+
+		this.armR.addChild(this.lowerArmR);
+		this.armL.addChild(this.lowerArmL);
 	}
 
 	@Override
@@ -119,7 +138,6 @@ public class ModelCelestial extends ModelBase {
 			this.legR.render(scale);
 			this.hat.render(scale);
 			this.lowertorso.render(scale);
-
 		}
 
 		GlStateManager.popMatrix();
@@ -134,7 +152,6 @@ public class ModelCelestial extends ModelBase {
 		this.armL.showModel = visible;
 		this.armR.showModel = visible;
 		this.lowertorso.showModel = visible;
-
 	}
 
 	public void setRotation(ModelRenderer modelRenderer, float x, float y, float z) { //You spin me right round
@@ -158,6 +175,12 @@ public class ModelCelestial extends ModelBase {
 		this.armL.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.08F) * 0.03F - 0.05F;
 		this.armR.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.03F;
 		this.armL.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.03F;
+
+//		Etheric.logger.log(Level.INFO, "ageInTicks: " + ageInTicks);
+//		Etheric.logger.log(Level.INFO, "Cos: " + MathHelper.cos(ageInTicks));
+//		Etheric.logger.log(Level.INFO, "CosMuted: " + MathHelper.cos(ageInTicks * 0.08F));
+//		Etheric.logger.log(Level.INFO, "CosPostProcess1: " + MathHelper.cos(ageInTicks * 0.08F) * 0.03F);
+//		Etheric.logger.log(Level.INFO, "CosPostProcessed: " + (MathHelper.cos(ageInTicks * 0.08F) * 0.03F - 0.05f));
 	}
 
 	public void setLivingAnimations(EntityLivingBase entityIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
