@@ -49,7 +49,7 @@ public class ModelCelestial extends ModelBase {
 
 		this.lowerArmL = new ModelRenderer(this, 48, 28);
 		this.lowerArmL.setRotationPoint(0.0F, 0.0F, 0.0F);
-		this.lowerArmL.addBox(0.0F, 0.0F, 0.0F, 4, 12, 4);
+		this.lowerArmL.addBox(-0.001F, 0.0F, -4.0F, 4, 12, 4);
 
 		this.armR = new ModelRenderer(this, 48, 16);
 		this.armR.setRotationPoint(7.0F, -22.0F, 0.0F);
@@ -57,8 +57,8 @@ public class ModelCelestial extends ModelBase {
 		this.armR.mirror = true;
 
 		this.lowerArmR = new ModelRenderer(this, 48, 28);
-		this.lowerArmR.setRotationPoint(-7.0F, -12.0F, 0.0F);
-		this.lowerArmR.addBox(6.0F, 22.0F, -2.0F, 4, 12, 4);
+		this.lowerArmR.setRotationPoint(-7.0F, 0.0F, 0.0F);
+		this.lowerArmR.addBox(0.001F, 0.0F, -4.0F, 4, 12, 4);
 
 		this.legL = new ModelRenderer(this, 0, 16);
 		this.legL.setRotationPoint(-1.9F, 0.0F, 0.1F);
@@ -67,8 +67,6 @@ public class ModelCelestial extends ModelBase {
 		this.legR.setRotationPoint(1.9F, 0.0F, 0.1F);
 		this.legR.addBox(-2.0F, 0.0F, -2.0F, 4, 24, 4);
 		this.legR.mirror = true;
-
-
 
 		this.hat = new ModelRenderer(this, 32, 0);
 		this.hat.setRotationPoint(0.0F, -24.0F, 0.0F);
@@ -129,7 +127,6 @@ public class ModelCelestial extends ModelBase {
 			this.lowertorso.render(scale);
 			GlStateManager.disableBlend();
 		}else{
-
 			this.armL.render(scale);
 			this.legL.render(scale);
 			this.head.render(scale);
@@ -176,14 +173,20 @@ public class ModelCelestial extends ModelBase {
 		this.armR.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.03F;
 		this.armL.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.03F;
 
-//		this.lowerArmL.offsetY = -2F;
-//		this.lowerArmL.setRotationPoint(-8.0F, 22.0F, 1.0F);
-		this.lowerArmL.setRotationPoint(-3.0F, 10.0F, -2.0F); //Front left corner of elbow when looking at front of celestial
-//		this.lowerArmL.rotateAngleX = -2.5F;
+		this.lowerArmL.setRotationPoint(-3.0F, 10.0F, 2.0F);
+//		this.lowerArmL.rotateAngleX = 0.3F;													//Sets
+//		this.lowerArmL.rotateAngleX += 0.01F;												//Rotates
 
-//		this.lowerArmR.rotateAngleZ += MathHelper.sin(ageInTicks * 0.05F) * 0.03F;
-//		this.lowerArmL.rotateAngleZ += 0.01F;
-		this.lowerArmL.rotateAngleX += 0.01F;
+		this.lowerArmL.rotateAngleX = 0.0F;													//Breathing
+		this.lowerArmL.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.03 - 0.05F;	//Breathing
+
+		this.lowerArmR.setRotationPoint(-1.0F, 10.0F, 2.0F);
+//		this.lowerArmR.rotateAngleX = 0.3F;													//Sets
+//		this.lowerArmR.rotateAngleX += 0.01F;												//Rotates
+
+		this.lowerArmR.rotateAngleX = 0.0F;													//Breathing
+		this.lowerArmR.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.03 - 0.05F;	//Breathing
+
 
 //		Etheric.logger.log(Level.INFO, "ageInTicks: " + ageInTicks);
 //		Etheric.logger.log(Level.INFO, "Cos: " + MathHelper.cos(ageInTicks));

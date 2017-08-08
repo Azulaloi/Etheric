@@ -5,6 +5,7 @@ import etheric.client.model.entity.ModelCelestial;
 import etheric.client.model.entity.ModelLesserCelestial;
 import etheric.common.entity.mob.EntityCelestial;
 import etheric.common.entity.mob.EntityLesserCelestial;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -21,6 +22,7 @@ public class RenderCelestial extends RenderLiving<EntityCelestial> {
 
 	public RenderCelestial(RenderManager renderManagerIn) {
 		super(renderManagerIn, new ModelCelestial(), 0.5F);
+//		this.addLayer(new RenderCelestialLayer(this)); //This file is not pushed to repo as it is not even vaguely functional, but used in dev. Will remove before PR if not used for any Celestials.
 	}
 
 	@Override
@@ -37,4 +39,7 @@ public class RenderCelestial extends RenderLiving<EntityCelestial> {
 		
 	}
 
+	public ModelCelestial getMainModel(){
+		return (ModelCelestial)super.getMainModel();
+	}
 }
